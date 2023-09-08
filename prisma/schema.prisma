@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  cats  Cat[]
+}
+
 model Cat {
   id          Int      @id @default(autoincrement())
   name        String
@@ -18,4 +25,6 @@ model Cat {
   neutered    Boolean
   forAdoption Boolean
   adopted     Boolean
+  adoptedBy   User?    @relation(fields: [adopterId], references: [id])
+  adopterId   Int?
 }
